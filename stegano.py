@@ -1,4 +1,5 @@
 from PIL import Image
+import os
 
 def convert_data(data):
     binary_data = ''
@@ -54,8 +55,21 @@ def encrypt(input_img, data):
     else:
         raise Exception(f'Data overflows image capacity. Data size: {len(data_to_encrypt)} Image capacity: {img_cap}')
 
-def decrypt():
+def decrypt(input_img):
     pass
+
+def encryption_menu():
+    img_path = input('Image location: ')
+    data = input('Text to encrypt: ')
+    img = Image.open(img_path)
+    encrypted_img = encrypt(img, data)
+    encrypted_img.save('encrypted_' + img_path)
+
+def decryption_menu():
+    img_path = input('Image location: ')
+    img = Image.open(img_path)
+    decrypted_text = decrypt(img)
+    print("Decrypted message: " + decrypted_text)
 
 def main():
     while True:
@@ -65,8 +79,10 @@ def main():
             "3) Quit")
         user_input = int(input("Execute: "))
         if user_input == 1:
+            encryption_menu()
             break
         elif user_input == 2:
+            decryption_menu()
             break
         elif user_input == 3:
             break
