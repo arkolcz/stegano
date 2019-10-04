@@ -54,10 +54,33 @@ def encrypt(input_img, data):
         print(f'Data overflows image capacity. Data size: {len(data_to_encrypt)} Image capacity: {img_cap}')
 
 def decrypt():
-    pass
+    input_image = Image.open('encrypted_test.jpg', 'r')
+    image_data = iter(input_image.getdata())
+    decrypted_msg = ''
+    char_list = []
+    
+    for pixel in image_data:
+        char_list.append(pixel)
+        if len(char_list) == 3:
+            bin_data = ''
+            values = list(sum(char_list, ()))
+            print(values)
+            for i in values[:8]:
+                if i % 2 == 0:
+                    bin_data += '0'
+                else:
+                    bin_data += '1'
+            decrypted_msg += bin_data
+            if values[-1] % 2 == 0:
+                break
+            del values[:]
+            del char_list[:]
+    print(decrypted_msg)
 
 def main():
-    pass
+    decrypt()
+
+
 if __name__ == '__main__' : 
     main()
     
