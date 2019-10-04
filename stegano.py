@@ -57,11 +57,7 @@ def decrypt():
     pass
 
 def main():
-    img = Image.open('./img/av.jpg')
-    data_string = "Hello there, friend."
-    encrypted_image = encrypt(img, data_string)
-    encrypted_image.save('encrypted.jpg')
-
+    pass
 if __name__ == '__main__' : 
     main()
     
