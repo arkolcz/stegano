@@ -1,4 +1,5 @@
 from PIL import Image
+import time
 
 def convert_data(data):
     binary_data = ''
@@ -54,27 +55,32 @@ def encrypt(input_img, data):
         print(f'Data overflows image capacity. Data size: {len(data_to_encrypt)} Image capacity: {img_cap}')
 
 def decrypt():
-    input_image = Image.open('encrypted_test.jpg', 'r')
-    image_data = iter(input_image.getdata())
+    test_i = Image.open('photo-550.jpg')
+    encrypt(test_i, "Hello there, friend.")
+    input_image = Image.open('encrypted_photo-550.png', 'r')
+    img_w, img_h = input_image.size
+    x, y = 0, 0
+    stop_loop = False
     decrypted_msg = ''
     char_list = []
-    
-    for pixel in image_data:
-        char_list.append(pixel)
-        if len(char_list) == 3:
-            bin_data = ''
-            values = list(sum(char_list, ()))
-            print(values)
-            for i in values[:8]:
-                if i % 2 == 0:
-                    bin_data += '0'
-                else:
-                    bin_data += '1'
-            decrypted_msg += bin_data
-            if values[-1] % 2 == 0:
-                break
-            del values[:]
-            del char_list[:]
+    for y in range(img_h):
+        if stop_loop:
+            break
+        for x in range(img_w):
+            if len(char_list) == 3:
+                bin_data = ''
+                values = list(sum(char_list, ()))
+                for i in values[:8]:
+                    if i % 2 == 0:
+                        bin_data += '0'
+                    else:
+                        bin_data += '1'
+                decrypted_msg += bin_data
+                if values[-1] % 2 == 0:
+                    stop_loop = True
+                    break
+                del values[:]
+                del char_list[:]
     print(decrypted_msg)
 
 def main():
