@@ -1,4 +1,5 @@
 from PIL import Image
+import os
 
 def convert_data(data):
     binary_data = ''
@@ -16,6 +17,7 @@ def convert_data(data):
 
 def modify_pixel(pixel, data):
     pixel = list(pixel)
+    # For '0' change pixel value to odd, for '1' to even
     for i in range(3):
         if (data[i] == '0') and (pixel[i] % 2 != 0):
             pixel[i] -= 1 
@@ -47,11 +49,11 @@ def encrypt(input_img, data):
                 y += 1
                 x = 0 
             else:
-                print("Data overflow")
+                raise Exception('Data overflow')
                 break
         return output_img
     else:
-        print(f'Data overflows image capacity. Data size: {len(data_to_encrypt)} Image capacity: {img_cap}')
+        raise Exception(f'Data overflows image capacity. Data size: {len(data_to_encrypt)} Image capacity: {img_cap}')
 
 def decrypt(input_image):
     image_data = iter(input_image.getdata())
@@ -79,8 +81,37 @@ def decrypt(input_image):
             del pixel_set[:]
     return decrypted_data
 
-def main():
-    pass
+def encryption_menu():
+    img_path = input('Image location: ')
+    data = input('Text to encrypt: ')
+    img = Image.open(img_path)
+    encrypted_img = encrypt(img, data)
+    # Encrypted file must be saved in loseless format like PNG 
+    encrypted_img.save('encrypted_' + img_path + '.png', 'PNG')
 
+def decryption_menu():
+    img_path = input('Image location: ')
+    img = Image.open(img_path)
+    decrypted_text = decrypt(img)
+    print("Decrypted message: " + decrypted_text)
+
+def main():
+    while True:
+        print("#################### Encryption Tool ###################\n"
+            "1) Encrypt file\n"
+            "2) Decrypt file\n"
+            "3) Quit")
+        user_input = int(input("Execute: "))
+        if user_input == 1:
+            encryption_menu()
+            break
+        elif user_input == 2:
+            decryption_menu()
+            break
+        elif user_input == 3:
+            break
+        else:
+            print('Incorrect input')
+            
 if __name__ == '__main__' : 
     main()
