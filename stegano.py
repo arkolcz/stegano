@@ -73,7 +73,7 @@ def decrypt(input_image):
                     bin_data += '0'
                 else:
                     bin_data += '1'
-            decrypted_msg += chr(bin_data)
+            decrypted_data += bin_data
             if values[-1] % 2 == 0:
                 # If 9'th bit is odd break the loop 
                 break
