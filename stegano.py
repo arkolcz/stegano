@@ -54,39 +54,33 @@ def encrypt(input_img, data):
     else:
         print(f'Data overflows image capacity. Data size: {len(data_to_encrypt)} Image capacity: {img_cap}')
 
-def decrypt():
-    test_i = Image.open('photo-550.jpg')
-    encrypt(test_i, "Hello there, friend.")
-    input_image = Image.open('encrypted_photo-550.png', 'r')
-    img_w, img_h = input_image.size
-    x, y = 0, 0
-    stop_loop = False
-    decrypted_msg = ''
-    char_list = []
-    for y in range(img_h):
-        if stop_loop:
-            break
-        for x in range(img_w):
-            if len(char_list) == 3:
-                bin_data = ''
-                values = list(sum(char_list, ()))
-                for i in values[:8]:
-                    if i % 2 == 0:
-                        bin_data += '0'
-                    else:
-                        bin_data += '1'
-                decrypted_msg += bin_data
-                if values[-1] % 2 == 0:
-                    stop_loop = True
-                    break
-                del values[:]
-                del char_list[:]
-    print(decrypted_msg)
+def decrypt(input_image):
+    image_data = iter(input_image.getdata())
+    decrypted_data = ''
+    pixel_set = []
+    
+    for pixel in image_data:
+        pixel_set.append(pixel)
+        if len(pixel_set) == 3:
+            # We are always looking for 3 pixels, because it give us 9 bits
+            # Bit 1-8 are representation of a ASCII char; odd value of 9'th bit indicates the end of message
+            bin_data = ''
+            values = list(sum(pixel_set, ()))
+            for i in values[:8]:
+                # Decrypt single 8bit character
+                if i % 2 == 0:
+                    bin_data += '0'
+                else:
+                    bin_data += '1'
+            decrypted_msg += chr(bin_data)
+            if values[-1] % 2 == 0:
+                # If 9'th bit is odd break the loop 
+                break
+            del pixel_set[:]
+    return decrypted_data
 
 def main():
-    decrypt()
-
+    pass
 
 if __name__ == '__main__' : 
     main()
-    
