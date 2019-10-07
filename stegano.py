@@ -63,7 +63,8 @@ def encryption_menu():
     data = input('Text to encrypt: ')
     img = Image.open(img_path)
     encrypted_img = encrypt(img, data)
-    encrypted_img.save('encrypted_' + img_path)
+    # Encrypted file must be saved in loseless format like PNG 
+    encrypted_img.save('encrypted_' + img_path + '.png', 'PNG')
 
 def decryption_menu():
     img_path = input('Image location: ')
