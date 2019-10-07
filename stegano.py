@@ -1,5 +1,4 @@
 from PIL import Image
-import time
 
 def convert_data(data):
     binary_data = ''
@@ -76,6 +75,7 @@ def decrypt(input_image):
             if values[-1] % 2 == 0:
                 # If 9'th bit is odd break the loop 
                 break
+            # Clear pixel set after each loop iteration
             del pixel_set[:]
     return decrypted_data
 
