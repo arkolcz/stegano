@@ -16,7 +16,7 @@ Each character with message end indicator is stored on 3 pixels (3 pixel x 3 RGB
 ### Example:
 **Text to encrypt:** XY </br>
 **Binary representation:** 01011000 01011001 </br>
-**Binary with message end indicators**: 01011000<span style="color:red">1</span>01011001<span style="color:red">0</span></br>
+**Binary with message end indicators**: 01011000**1**01011001**0** </br>
 **Image pixels**: (100,230,93) (213,210,212) (141,53,53) (31,0,34) (99,90,211) (43,45,61)</br>
 **Bit encryption**: </br>
 > <span style="color:red">0</span><span style="color:green">1</span><span style="color:lightblue">0</span> </br>
