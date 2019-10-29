@@ -5,8 +5,9 @@ def encryption_menu():
     data = input('Text to encrypt: ')
     img = Image.open(img_path)
     encrypted_img = encrypt(img, data)
+    img_path = 'encrypted_' + img_path.split('.', 1)[0] + '.png'
     # Encrypted file must be saved in loseless format like PNG 
-    encrypted_img.save('encrypted_' + img_path + '.png', 'PNG')
+    encrypted_img.save(img_path)
 
 def encrypt(input_img, data):
     # Convert data to binary format and group it as representation of pixels
