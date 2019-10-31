@@ -11,7 +11,7 @@ Each ASCII character can be presented in binary form. For example: X -> 88 -> 10
 For every '1' in binary message we change 0-255 RGB value to even and for '0' to odd. </br>
 After each binary sequence of a character there is a bit that indicates the end of message: '0' - message end; '1' - message continue </br>
 
-Each character with message end indicator is stored on 3 pixels (3 pixel x 3 RGB values = 9 bytes).
+Each character with message end indicator is stored on 3 pixels (3 pixel x 3 RGB values = 9 bits that can be stored).
 
 ### Example:
 **Text to encrypt:** XY </br>
